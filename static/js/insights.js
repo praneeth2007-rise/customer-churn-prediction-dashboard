@@ -1,0 +1,29 @@
+(() => {
+ const d=window.INSIGHTS_CHARTS||{},ink='#171717',muted='#726E67',grid='#E5E1D9';
+ const colors={jio:'#2563EB',airtel:'#E31E35',netflix:'#E50914',amazon:'#0D9488'};
+ const base={paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',font:{family:'DM Sans, sans-serif',size:10,color:muted},margin:{l:44,r:16,t:10,b:52},xaxis:{gridcolor:grid,zerolinecolor:grid,linecolor:grid,tickfont:{size:9}},yaxis:{gridcolor:grid,zerolinecolor:grid,linecolor:grid,tickfont:{size:9},rangemode:'tozero'},legend:{orientation:'h',y:-.23,font:{size:9}},hoverlabel:{bgcolor:'#fff',bordercolor:grid,font:{color:ink,size:10}}};
+ const cfg={responsive:true,displayModeBar:false};
+ const draw=(id,traces,layout={})=>{const el=document.getElementById(id);if(!el)return;if(window.Plotly)Plotly.newPlot(el,traces,{...base,...layout},cfg);else el.textContent='Interactive chart unavailable. Check your connection and reload.'};
+ const donut=(id,x,color)=>draw(id,[{type:'pie',hole:.6,labels:x.labels,values:x.values,marker:{colors:color,line:{color:'#fff',width:3}},textinfo:'label+value',textposition:'outside',hovertemplate:'%{label}: %{value:,}<extra></extra>'}],{margin:{l:14,r:14,t:14,b:14},showlegend:false,uniformtext:{minsize:8,mode:'hide'}});
+ const grouped=(id,x,color)=>draw(id,[{type:'bar',name:'Stayed',x:x.labels,y:x.stayed,marker:{color:'#c9c5bc'},hovertemplate:'%{x}<br>Stayed: %{y:,}<extra></extra>'},{type:'bar',name:'Churned',x:x.labels,y:x.churned,marker:{color},hovertemplate:'%{x}<br>Churned: %{y:,}<extra></extra>'}],{barmode:'group',margin:{...base.margin,b:72},xaxis:{...base.xaxis,tickangle:-15},yaxis:{...base.yaxis,title:{text:'Records',font:{size:9}}}});
+ const rate=(id,x,color)=>draw(id,[{type:'bar',x:x.labels,y:x.rates,customdata:x.totals,marker:{color},hovertemplate:'%{x}<br>Churn rate: %{y:.2f}%<br>Records: %{customdata:,}<extra></extra>'}],{margin:{...base.margin,b:65},xaxis:{...base.xaxis,tickangle:-12},yaxis:{...base.yaxis,rangemode:'tozero',ticksuffix:'%',title:{text:'Churn rate (%)',font:{size:9}}}});
+ const services=(id,x,color)=>draw(id,[{type:'bar',name:'No',x:x.labels,y:x.no_rates,marker:{color:'#c9c5bc'},hovertemplate:'%{x}<br>No: %{y:.2f}% churn<extra></extra>'},{type:'bar',name:'Yes',x:x.labels,y:x.yes_rates,marker:{color},hovertemplate:'%{x}<br>Yes: %{y:.2f}% churn<extra></extra>'}],{barmode:'group',margin:{...base.margin,l:100,b:110},xaxis:{...base.xaxis,tickangle:-35},yaxis:{...base.yaxis,rangemode:'tozero',ticksuffix:'%',title:{text:'Churn rate (%)',font:{size:9}}}});
+ const meanBars=(id,x,color,axis)=>draw(id,[{type:'bar',x:x.labels,y:x.values,marker:{color:[color,'#a8a49c','#d5d1c9']},hovertemplate:'%{x}<br>'+axis+': %{y:,.2f}<extra></extra>'}],{yaxis:{...base.yaxis,title:{text:axis,font:{size:9}}}});
+ const brandPie=(id,x,color)=>donut(id,x,[color,'#a8a49c','#d5d1c9']);
+ // Jio
+ brandPie('jio-status',d.jio.status,colors.jio);grouped('jio-contract',d.jio.contract,colors.jio);rate('jio-tenure',d.jio.tenure,colors.jio);services('jio-services',d.jio.services,colors.jio);meanBars('jio-revenue',d.jio.revenue,colors.jio,'Mean Total_Revenue');
+ // Airtel
+ brandPie('airtel-status',d.airtel.status,colors.airtel);grouped('airtel-contract',d.airtel.contract,colors.airtel);rate('airtel-tenure',d.airtel.tenure,colors.airtel);services('airtel-services',d.airtel.services,colors.airtel);
+ const charges=d.airtel.charges||{};draw('airtel-charges',Object.keys(charges).map((name,i)=>({type:'box',name,y:charges[name],marker:{color:[colors.airtel,'#99958d','#c9c5bc'][i]},boxpoints:false,hovertemplate:name+'<br>Monthly charge: %{y:.2f}<extra></extra>'})),{boxmode:'group',yaxis:{...base.yaxis,title:{text:'Monthly charge',font:{size:9}}}});
+ // Netflix
+ donut('netflix-status',d.netflix.status,[colors.netflix,'#aaa69e']);rate('netflix-subscription',d.netflix.subscription,colors.netflix);rate('netflix-region',d.netflix.region,colors.netflix);rate('netflix-device',d.netflix.device,colors.netflix);
+ meanBars('netflix-watch',d.netflix.watch,colors.netflix,'Mean watch_hours');
+ const daily=d.netflix.daily_points||{};draw('netflix-daily',Object.entries(daily).map((entry,i)=>({type:'box',name:entry[0],y:entry[1],marker:{color:i?colors.netflix:'#aaa69e'},boxpoints:'outliers',jitter:.25,pointpos:0,hovertemplate:entry[0]+'<br>avg_watch_time_per_day: %{y:.2f} hours<extra></extra>'})),{boxmode:'group',yaxis:{...base.yaxis,title:{text:'Hours per day (source values)',font:{size:9}}}});
+ meanBars('netflix-fee',d.netflix.fee,colors.netflix,'Mean monthly_fee');
+ // Amazon Prime user data only; renewal status is not churn.
+ const countBar=(id,x,color,axis)=>draw(id,[{type:'bar',x:x.labels,y:x.values,marker:{color},hovertemplate:'%{x}<br>%{y:,} records<extra></extra>'}],{margin:{...base.margin,b:65},xaxis:{...base.xaxis,tickangle:-12},yaxis:{...base.yaxis,title:{text:axis||'Prime user records',font:{size:9}}}});
+ countBar('amazon-plans',d.amazon.plans,colors.amazon);countBar('amazon-payments',d.amazon.payments,'#2563EB');countBar('amazon-duration',d.amazon.duration,colors.amazon);countBar('amazon-devices',d.amazon.devices,'#2563EB');countBar('amazon-renewal',d.amazon.renewal,colors.amazon);countBar('amazon-usage',d.amazon.usage,colors.amazon);countBar('amazon-support',d.amazon.support,'#2563EB','Recorded support interactions');
+ const side=document.querySelector('.sidebar'),scrim=document.querySelector('.mobile-scrim'),toggle=document.querySelector('.sidebar-toggle');
+ const close=()=>{side?.classList.remove('open');scrim?.classList.remove('open');toggle?.setAttribute('aria-expanded','false')};
+ toggle?.addEventListener('click',()=>{const open=!side.classList.contains('open');side.classList.toggle('open',open);scrim?.classList.toggle('open',open);toggle.setAttribute('aria-expanded',String(open))});scrim?.addEventListener('click',close);side?.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',close));
+})();
