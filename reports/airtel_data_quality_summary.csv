@@ -1,0 +1,57 @@
+dataset,check,field,value,note
+Jio,rows,,6418,
+Jio,duplicate_full_rows,,0,
+Jio,duplicate_customer_ids,customer_id,0,
+Jio,missing_values,value_deal,3548,
+Jio,missing_values,multiple_lines,622,
+Jio,missing_values,internet_type,1390,
+Jio,missing_values,online_security,1390,
+Jio,missing_values,online_backup,1390,
+Jio,missing_values,device_protection_plan,1390,
+Jio,missing_values,premium_support,1390,
+Jio,missing_values,streaming_tv,1390,
+Jio,missing_values,streaming_movies,1390,
+Jio,missing_values,streaming_music,1390,
+Jio,missing_values,unlimited_data,1390,
+Jio,missing_values,churn_category,4686,
+Jio,missing_values,churn_reason,4686,
+Airtel main,rows,,6418,
+Airtel main,duplicate_full_rows,,0,
+Airtel main,duplicate_customer_ids,customer_id,0,
+Airtel main,missing_values,value_deal,3548,
+Airtel main,missing_values,internet_type,1390,
+Airtel view,rows,,6007,
+Airtel view,duplicate_full_rows,,0,
+Airtel view,duplicate_customer_ids,customer_id,0,
+Airtel view,missing_values,value_deal,3297,
+Airtel view,missing_values,internet_type,1223,
+Airtel predictions,rows,,378,
+Airtel predictions,duplicate_full_rows,,0,
+Airtel predictions,duplicate_customer_ids,customer_id,0,
+Airtel predictions,missing_values,value_deal,231,
+Airtel predictions,missing_values,internet_type,153,
+Airtel vs Jio,shared_customer_ids,customer_id,6418,IDs are not included in this report.
+Airtel vs Jio,different_values_by_shared_id,multiple_lines,622,Count only; feature values and IDs are not exposed.
+Airtel vs Jio,different_values_by_shared_id,online_security,1390,Count only; feature values and IDs are not exposed.
+Airtel vs Jio,different_values_by_shared_id,online_backup,1390,Count only; feature values and IDs are not exposed.
+Airtel vs Jio,different_values_by_shared_id,device_protection_plan,1390,Count only; feature values and IDs are not exposed.
+Airtel vs Jio,different_values_by_shared_id,premium_support,1390,Count only; feature values and IDs are not exposed.
+Airtel vs Jio,different_values_by_shared_id,streaming_tv,1390,Count only; feature values and IDs are not exposed.
+Airtel vs Jio,different_values_by_shared_id,streaming_movies,1390,Count only; feature values and IDs are not exposed.
+Airtel vs Jio,different_values_by_shared_id,streaming_music,1390,Count only; feature values and IDs are not exposed.
+Airtel vs Jio,different_values_by_shared_id,unlimited_data,1390,Count only; feature values and IDs are not exposed.
+Airtel vs Jio,different_values_by_shared_id,churn_category,4686,Count only; feature values and IDs are not exposed.
+Airtel vs Jio,different_values_by_shared_id,churn_reason,4686,Count only; feature values and IDs are not exposed.
+Airtel vs Jio,exact_rows_across_common_columns,,1460,Rows aligned by customer ID.
+Airtel vs Jio,matching_status_labels_by_shared_id,customer_status,6418,Compared by shared ID; IDs are not exposed.
+Airtel view vs Jio,shared_nonjoined_customer_ids,customer_id,6007,The view contains Stayed and Churned records only.
+Airtel predictions,joined_status_rows,customer_status,378,
+Airtel predictions,predicted_churned_rows,customer_status_predicted,378,Predictions.csv is not used for model training.
+Airtel main,target_distribution,customer_status=Stayed,4275,
+Airtel main,target_distribution,customer_status=Churned,1732,
+Airtel main,target_distribution,customer_status=Joined,411,
+Airtel main,negative_monthly_charge_rows,monthly_charge,107,Values are retained unchanged; minimum is -10.0.
+Airtel modeling,excluded_columns,,customer_id; customer_status; churn_category; churn_reason; total_charges; total_refunds; total_extra_data_charges; total_long_distance_charges; total_revenue,Direct targets and post-outcome fields are excluded. Lifetime aggregates are excluded because no prediction-time cutoff is documented.
+Netflix,target_binary_nonmissing,churned,passed,Structural validation only; the label definition and provenance are unverified.
+Netflix,target_distribution,churned=0,2485,
+Netflix,target_distribution,churned=1,2515,

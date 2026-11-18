@@ -1,0 +1,23 @@
+check,value,note
+training_unique_ids,440832.0,
+testing_unique_ids,64374.0,
+shared_unique_ids,62995.0,Individual IDs are not included.
+shared_ids_as_percent_of_testing_ids,97.8578,
+shared_ids_with_matching_labels,30217.0,
+shared_ids_with_conflicting_labels,32778.0,"Conflicts are reported, not discarded."
+shared_ids_with_different_feature_values:Age,61669.0,
+shared_ids_with_different_feature_values:Gender,31486.0,
+shared_ids_with_different_feature_values:Tenure,61963.0,
+shared_ids_with_different_feature_values:Usage Frequency,60893.0,
+shared_ids_with_different_feature_values:Support Calls,57285.0,
+shared_ids_with_different_feature_values:Payment Delay,60982.0,
+shared_ids_with_different_feature_values:Subscription Type,41974.0,
+shared_ids_with_different_feature_values:Contract Length,41918.0,
+shared_ids_with_different_feature_values:Total Spend,62920.0,
+shared_ids_with_different_feature_values:Last Interaction,60863.0,
+shared_ids_with_any_feature_difference,62995.0,
+identical_full_records_across_files,0.0,
+testing_ids_not_in_training,1379.0,
+training_ids_not_in_testing,377837.0,
+training_churn_rate_percent,56.7107,
+testing_churn_rate_percent,47.3685,Distribution only; supplied testing file is not used for evaluation.

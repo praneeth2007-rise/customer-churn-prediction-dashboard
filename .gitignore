@@ -31,19 +31,3 @@ desktop.ini
 *.db
 *.sqlite3
 
-# Customer datasets - exclude until sharing permission is confirmed
-Datasets/
-
-# Trained machine learning models - exclude until sharing permission is confirmed
-models/
-
-# Review reports before publishing
-reports/
-
-# Exclude project data until sharing permissions are confirmed
-Datasets/
-models/
-reports/
-
-# Jupyter notebooks - review before publishing
-Notebooks/

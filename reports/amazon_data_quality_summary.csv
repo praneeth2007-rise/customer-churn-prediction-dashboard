@@ -1,0 +1,17 @@
+dataset,check,field,value,note
+Amazon Prime Video,rows,,2500,
+Amazon Prime Video,columns,,19,
+Amazon Prime Video,missing_cells,,0,
+Amazon Prime Video,duplicate_full_rows,,0,
+Amazon Prime Video,supervised_churn_target,,not established,Renewal Status describes preference/settings; dates alone do not establish churn.
+Amazon Prime Video,renewal_status_count,Auto-renew,1274,Not treated as churn or retention.
+Amazon Prime Video,renewal_status_count,Manual,1226,Not treated as churn or retention.
+Amazon Prime Video,parseable_dates,Date of Birth,2500,
+Amazon Prime Video,unparseable_dates,Date of Birth,0,
+Amazon Prime Video,parseable_dates,Membership Start Date,2500,
+Amazon Prime Video,unparseable_dates,Membership Start Date,0,
+Amazon Prime Video,parseable_dates,Membership End Date,2500,
+Amazon Prime Video,unparseable_dates,Membership End Date,0,
+Amazon Prime Video,end_before_start,Membership dates,0,Chronology check does not define churn.
+Amazon Prime Video,pii_fields_excluded,,Name; Email Address; Username; Payment Information; User ID,No personal values are included in the report.
+Amazon Prime Video,model_created,,no,No defensible churn target was found.
